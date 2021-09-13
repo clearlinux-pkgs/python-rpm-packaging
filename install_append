@@ -1,0 +1,4 @@
+dest=%{buildroot}/usr/lib/rpm
+mkdir -pv $dest/fileattrs
+cp -av ./fileattrs/* $dest/fileattrs/
+cp -av ./scripts/* $dest/
