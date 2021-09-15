@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Wed, 15 Sep 2021 15:04:30 -0700
+Subject: [PATCH] Add a makefile
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ Makefile | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+ create mode 100644 Makefile
+
+diff --git a/Makefile b/Makefile
+new file mode 100644
+index 0000000..bf0cec7
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,9 @@
++all:
++	@echo nothing to do
++
++RPM_CONFIG_DIR = $(shell rpm --eval '%{_rpmconfigdir}')
++
++install:
++	mkdir -pv $(DESTDIR)$(RPM_CONFIG_DIR)/fileattrs
++	cp -av ./fileattrs/* $(DESTDIR)$(RPM_CONFIG_DIR)/fileattrs/
++	cp -av ./scripts/* $(DESTDIR)$(RPM_CONFIG_DIR)/

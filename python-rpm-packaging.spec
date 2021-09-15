@@ -4,10 +4,10 @@
 #
 Name     : python-rpm-packaging
 Version  : a18ca48959c95aefa725317084dd2d3e242e4f71
-Release  : 1
+Release  : 2
 URL      : https://github.com/rpm-software-management/python-rpm-packaging/archive/a18ca48959c95aefa725317084dd2d3e242e4f71.tar.gz
 Source0  : https://github.com/rpm-software-management/python-rpm-packaging/archive/a18ca48959c95aefa725317084dd2d3e242e4f71.tar.gz
-Summary  : No detailed summary available
+Summary  : Tools for packaging Python projects with rpm
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: python-rpm-packaging-license = %{version}-%{release}
@@ -16,19 +16,10 @@ BuildRequires : py-python
 BuildRequires : pytest
 BuildRequires : tox
 BuildRequires : virtualenv
+Patch1: 0001-Add-a-makefile.patch
 
 %description
-# python-rpm-packaging
-## Running tests
-Requirements:
-- Python >= 3.8
-- pip >= 20.0.1
-- setuptools
-- pytest
-- pytest-xdist
-- pyyaml
-- wheel
-- poetry (due to [bug](https://github.com/pypa/pip/issues/9701))
+Tools for packaging Python projects with rpm.
 
 %package license
 Summary: license components for the python-rpm-packaging package.
@@ -41,6 +32,7 @@ license components for the python-rpm-packaging package.
 %prep
 %setup -q -n python-rpm-packaging-a18ca48959c95aefa725317084dd2d3e242e4f71
 cd %{_builddir}/python-rpm-packaging-a18ca48959c95aefa725317084dd2d3e242e4f71
+%patch1 -p1
 
 %build
 ## build_prepend content
@@ -50,7 +42,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1631571566
+export SOURCE_DATE_EPOCH=1631743990
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -59,28 +51,23 @@ export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
 export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
-make  %{?_smp_mflags}  || true
+make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1631571566
+export SOURCE_DATE_EPOCH=1631743990
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/python-rpm-packaging
 cp %{_builddir}/python-rpm-packaging-a18ca48959c95aefa725317084dd2d3e242e4f71/COPYING %{buildroot}/usr/share/package-licenses/python-rpm-packaging/588760a9f446cebfc4b61485cd09cd768908337f
-true
-## install_append content
-dest=%{buildroot}/usr/lib/rpm
-mkdir -pv $dest/fileattrs
-cp -av ./fileattrs/* $dest/fileattrs/
-cp -av ./scripts/* $dest/
-## install_append end
+%make_install
+## Remove excluded files
+rm -f %{buildroot}/usr/lib/rpm/fileattrs/pythondist.attr
 
 %files
 %defattr(-,root,root,-)
 /usr/lib/rpm/brp-python-bytecompile
 /usr/lib/rpm/brp-python-hardlink
 /usr/lib/rpm/fileattrs/python.attr
-/usr/lib/rpm/fileattrs/pythondist.attr
 /usr/lib/rpm/pythondistdeps.py
 
 %files license

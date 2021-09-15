@@ -1,2 +1,5 @@
 # This file contains the output files that need %exclude. Full path
 # names, one per line.
+# FIXME: consider enabling the pythondist dep generator eventually, once distro
+# tooling supports Requires/Provides version constraints other than equality.
+/usr/lib/rpm/fileattrs/pythondist.attr
