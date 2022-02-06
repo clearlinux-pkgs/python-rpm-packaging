@@ -4,18 +4,18 @@
 #
 Name     : python-rpm-packaging
 Version  : a18ca48959c95aefa725317084dd2d3e242e4f71
-Release  : 2
+Release  : 3
 URL      : https://github.com/rpm-software-management/python-rpm-packaging/archive/a18ca48959c95aefa725317084dd2d3e242e4f71.tar.gz
 Source0  : https://github.com/rpm-software-management/python-rpm-packaging/archive/a18ca48959c95aefa725317084dd2d3e242e4f71.tar.gz
 Summary  : Tools for packaging Python projects with rpm
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: python-rpm-packaging-license = %{version}-%{release}
-BuildRequires : pluggy
-BuildRequires : py-python
-BuildRequires : pytest
-BuildRequires : tox
-BuildRequires : virtualenv
+BuildRequires : pypi(py)
+BuildRequires : pypi-pluggy
+BuildRequires : pypi-pytest
+BuildRequires : pypi-tox
+BuildRequires : pypi-virtualenv
 Patch1: 0001-Add-a-makefile.patch
 
 %description
@@ -42,7 +42,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1631743990
+export SOURCE_DATE_EPOCH=1644191320
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -55,13 +55,13 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1631743990
+export SOURCE_DATE_EPOCH=1644191320
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/python-rpm-packaging
 cp %{_builddir}/python-rpm-packaging-a18ca48959c95aefa725317084dd2d3e242e4f71/COPYING %{buildroot}/usr/share/package-licenses/python-rpm-packaging/588760a9f446cebfc4b61485cd09cd768908337f
 %make_install
 ## Remove excluded files
-rm -f %{buildroot}/usr/lib/rpm/fileattrs/pythondist.attr
+rm -f %{buildroot}*/usr/lib/rpm/fileattrs/pythondist.attr
 
 %files
 %defattr(-,root,root,-)
